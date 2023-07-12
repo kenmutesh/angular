@@ -27,8 +27,8 @@
   margin-bottom: 5px;
 }
 
-.login-form input[type="email"],
-.login-form input[type="password"] {
+.login-form input[type="number"],
+.login-form input[type="number"] {
   width: 100%;
   padding: 8px;
   font-size: 16px;
