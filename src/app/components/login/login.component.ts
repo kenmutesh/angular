@@ -25,8 +25,8 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.loginForm = this.formbuilder.group({
-      email: [''],
-      password: ['', Validators.required]
+      id: ['', Validators.required],
+      pin: ['', Validators.required]
     });
   }
 
@@ -46,7 +46,7 @@ export class LoginComponent {
           this.router.navigate(['home']);
 
           // Store the token in localStorage
-          localStorage.setItem('token', JSON.stringify({ access_token: 'kdkskfmkmsdv' }));
+          localStorage.setItem('token', JSON.stringify({ access_token: res.data.access_token }));
 
         } else {
           alert('User not found');
