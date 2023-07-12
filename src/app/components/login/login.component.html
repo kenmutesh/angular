@@ -3,10 +3,10 @@
   <h3 class="login-subtitle">Login Here</h3>
   <form class="login-form" [formGroup]="loginForm" (ngSubmit)="login()">
     <div class="form-group">
-      <label for="email">Email</label>
-      <input formControlName="email" required type="email" class="form-control">
-      <label for="password">Password</label>
-      <input formControlName="password" type="password" class="form-control">
+      <label for="id">ID</label>
+      <input formControlName="id" required type="number" class="form-control">
+      <label for="PIN">Password</label>
+      <input formControlName="pin" type="number" class="form-control">
     </div>
     <button type="submit" class="btn-login">Submit</button>
     <span class="login-text">Don't have an account? <a routerLink="/signup">Sign Up</a></span>
