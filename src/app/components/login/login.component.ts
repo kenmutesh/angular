@@ -33,7 +33,7 @@ export class LoginComponent {
 
       const body = {}; // Add any additional data required in the request body
 
-      api.post('login', body, { headers })
+      api.post('get-token', body, { headers })
         .then(res => {
           alert('Login Successful');
           this.loginForm.reset();
