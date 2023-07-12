@@ -1,13 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-
-import axios from 'axios';
-import api from "../../api.service";
-
-// Set the default base URL for Axios
-axios.defaults.baseURL = 'http://localhost:3000';
+import api from '../../api.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +13,6 @@ export class LoginComponent {
 
   constructor(
     private formbuilder: FormBuilder,
-    private http: HttpClient,
     private router: Router
   ) {}
 
@@ -31,29 +24,29 @@ export class LoginComponent {
   }
 
   login() {
-    api.get('/signupUsersList')
-     // Use the relative URL instead of the full URL
-      .then(res => {
-        const user = res.data.find((a: any) => {
-          return (
-            a.email === this.loginForm.value.email &&
-            a.password === this.loginForm.value.password
-          );
-        });
-        if (user) {
+    if (this.loginForm.valid) {
+      const credentials = btoa(`${this.loginForm.value.id}:${this.loginForm.value.pin}`);
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${credentials}`
+      };
+
+      const body = {}; // Add any additional data required in the request body
+
+      api.post('login', body, { headers })
+        .then(res => {
           alert('Login Successful');
           this.loginForm.reset();
           this.router.navigate(['home']);
 
           // Store the token in localStorage
           localStorage.setItem('token', JSON.stringify({ access_token: res.data.access_token }));
-
-        } else {
-          alert('User not found');
-        }
-      })
-      .catch(err => {
-        alert('Something went wrong');
-      });
+        })
+        .catch(err => {
+          alert('Authentication failed. Please check your credentials.');
+        });
+    } else {
+      alert('Please fill in all the required fields.');
+    }
   }
 }
