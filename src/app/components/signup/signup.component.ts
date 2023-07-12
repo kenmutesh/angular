@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import axios from 'axios';
 import { Router } from '@angular/router';
+import api from '../../api.service';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.css']
 })
-export class SignupComponent {
+export class SignupComponent implements OnInit {
   signUpForm!: FormGroup;
 
   constructor(
@@ -19,18 +19,23 @@ export class SignupComponent {
   ngOnInit(): void {
     this.signUpForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      name: ['', [Validators.required, Validators.name]],
+      name: ['', [Validators.required]],
       id: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 
   signUp(): void {
     if (this.signUpForm.valid) {
-      const userData = this.signUpForm.value;
-      axios
-        .post('http://localhost:3000/signupUsersList', userData)
+      const userData = {
+        name: this.signUpForm.value.name,
+        email: this.signUpForm.value.email,
+        id: this.signUpForm.value.id
+      };
+
+      api.post('registration', userData)
         .then((res) => {
-          alert('Registration Successful');
+          const pin = res.data.user.pin;
+          alert('Registration Successful. Your PIN is: ' + pin);
           this.signUpForm.reset();
           this.router.navigate(['login']);
         })
