@@ -1,0 +1,50 @@
+{
+  "signupUsersList": [
+    {
+      "id": 1,
+      "email": "bolu@gmail.com",
+      "password": "1234"
+    },
+    {
+      "email": "ken@gmail.com",
+      "password": "123456",
+      "id": 2
+    },
+    {
+      "email": "ken@gmail.com",
+      "password": "",
+      "id": 3
+    },
+    {
+      "email": "ken@gmail.com",
+      "password": "",
+      "id": 4
+    }
+  ],
+  "deposit": [
+    {
+      "amount": 10000,
+      "accountNumber": "123123",
+      "id": 1
+    }
+  ],
+  "transfer": [
+    {
+      "id": "https://vm.tiktok.com/ZMNGPY8MR/",
+      "transferAccount": "44",
+      "amount": 55
+    }
+  ],
+  "withdraw": [
+    {
+      "amount": 123,
+      "idNumber": "1111",
+      "id": 1
+    }
+  ],
+  "balance": [
+    {
+      "balance": "2000"
+    }
+  ]
+}

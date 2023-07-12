@@ -1,0 +1,22 @@
+<div>
+  <h1>Transfer Form</h1>
+  <form [formGroup]="transferForm" (ngSubmit)="transfer()">
+    <div>
+      <label for="name">name</label>
+      <input formControlName="name" type="text" id="name" required>
+    </div>
+    <div>
+      <label for="transferAccount">Account</label>
+      <input formControlName="transferAccount" type="text" id="transferAccount" required>
+    </div>
+    <div>
+      <label for="transferAccount">Beneficiary Account</label>
+      <input formControlName="transferAccount" type="text" id="beneficiaryAccount" required>
+    </div>
+    <div>
+      <label for="amount">Amount</label>
+      <input formControlName="amount" type="number" id="amount" required>
+    </div>
+    <button type="submit">Transfer</button>
+  </form>
+</div>

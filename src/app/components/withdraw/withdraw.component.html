@@ -1,0 +1,18 @@
+<div>
+  <h1>Withdrawal Form</h1>
+  <form [formGroup]="withdrawForm" (ngSubmit)="withdraw()">
+    <div>
+      <label for="amount">Name</label>
+      <input formControlName="name" type="text" id="name" required>
+    </div>
+    <div>
+      <label for="amount">Amount</label>
+      <input formControlName="amount" type="number" id="amount" required>
+    </div>
+    <div>
+      <label for="idNumber">ID Number</label>
+      <input formControlName="idNumber" type="text" id="idNumber" required>
+    </div>
+    <button type="submit">Withdraw</button>
+  </form>
+</div>
