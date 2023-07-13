@@ -11,7 +11,6 @@ import api from "../../api.service";
 export class DepositComponent implements OnInit {
   depositForm!: FormGroup;
 
-
   constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
 
   ngOnInit(): void {
@@ -26,17 +25,19 @@ export class DepositComponent implements OnInit {
       const depositData = this.depositForm.value;
       const tokenData = localStorage.getItem('token');
 
-// Parse the token data JSON string to extract the access token
+      // Parse the token data JSON string to extract the access token
       const token = tokenData ? JSON.parse(tokenData).access_token : null;
-      api.post('/deposit', depositData,{
+
+      api.post('/deposit', depositData, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       })
-        .subscribe(res => {
+        .then(response => {
           alert('Deposit Successful');
           this.depositForm.reset();
-        }, err => {
+        })
+        .catch(error => {
           alert('Something went wrong');
         });
     } else {
