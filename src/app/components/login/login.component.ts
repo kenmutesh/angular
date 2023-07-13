@@ -34,7 +34,7 @@ export class LoginComponent {
 
       const body = {}; // Add any additional data required in the request body
 
-      this.http.post<any>('http://localhost:3000/get-token', body, { headers })
+      app.post('/get-token', body, { headers })
         .subscribe(
           (res) => {
             alert('Login Successful');
