@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import api from "../../api.service";
 
 @Component({
   selector: 'app-deposit',
@@ -23,8 +24,15 @@ export class DepositComponent implements OnInit {
   deposit() {
     if (this.depositForm.valid) {
       const depositData = this.depositForm.value;
-      // Perform the deposit action using the submitted values
-      this.http.post<any>('http://localhost:3000/deposit', depositData)
+      const tokenData = localStorage.getItem('token');
+
+// Parse the token data JSON string to extract the access token
+      const token = tokenData ? JSON.parse(tokenData).access_token : null;
+      api.post('/deposit', depositData,{
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
         .subscribe(res => {
           alert('Deposit Successful');
           this.depositForm.reset();
