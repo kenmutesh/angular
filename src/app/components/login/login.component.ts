@@ -35,7 +35,11 @@ export class LoginComponent {
 
       const body = {}; // Add any additional data required in the request body
 
-      api.post('/get-token', body, { headers })
+      const requestConfig: axios.AxiosRequestConfig<{}> = {
+        headers: headers
+      };
+
+      api.post('/get-token', body, requestConfig)
         .then((res) => {
           alert('Login Successful');
           this.loginForm.reset();
