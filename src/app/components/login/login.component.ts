@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import api from "../../api.service";
 
 @Component({
   selector: 'app-login',
@@ -34,20 +35,18 @@ export class LoginComponent {
 
       const body = {}; // Add any additional data required in the request body
 
-      app.post('/get-token', body, { headers })
-        .subscribe(
-          (res) => {
-            alert('Login Successful');
-            this.loginForm.reset();
-            this.router.navigate(['home']);
+      api.post('/get-token', body, { headers })
+        .then((res) => {
+          alert('Login Successful');
+          this.loginForm.reset();
+          this.router.navigate(['home']);
 
-            // Store the token in localStorage
-            localStorage.setItem('token', JSON.stringify({ access_token: res.access_token }));
-          },
-          (err) => {
-            alert('Authentication failed. Please check your credentials.');
-          }
-        );
+          // Store the token in localStorage
+          localStorage.setItem('token', JSON.stringify({ access_token: res.data.access_token }));
+        })
+        .catch((err) => {
+          alert('Authentication failed. Please check your credentials.');
+        });
     } else {
       alert('Please fill in all the required fields.');
     }
