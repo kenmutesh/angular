@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import api from "../../api.service";
+import api from '../../api.service';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +13,7 @@ export class LoginComponent {
 
   constructor(
     private formbuilder: FormBuilder,
-    private router: Router,
-    private http: HttpClient
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -28,19 +26,15 @@ export class LoginComponent {
   login() {
     if (this.loginForm.valid) {
       const credentials = btoa(`${this.loginForm.value.id}:${this.loginForm.value.pin}`);
-      const headers = new HttpHeaders({
+      const headers = {
         'Content-Type': 'application/json',
         Authorization: `Basic ${credentials}`
-      });
+      };
 
       const body = {}; // Add any additional data required in the request body
 
-      const requestConfig: axios.AxiosRequestConfig<{}> = {
-        headers: headers
-      };
-
-      api.post('/get-token', body, requestConfig)
-        .then((res) => {
+      api.post('get-token', body, { headers })
+        .then(res => {
           alert('Login Successful');
           this.loginForm.reset();
           this.router.navigate(['home']);
@@ -48,7 +42,7 @@ export class LoginComponent {
           // Store the token in localStorage
           localStorage.setItem('token', JSON.stringify({ access_token: res.data.access_token }));
         })
-        .catch((err) => {
+        .catch(err => {
           alert('Authentication failed. Please check your credentials.');
         });
     } else {
