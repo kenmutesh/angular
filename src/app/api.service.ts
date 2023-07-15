@@ -6,7 +6,7 @@ const api: AxiosInstance = axios.create({
   headers: {
     // Include the CSRF token in the headers
     'Content-Type': 'application/json',
-    'X-CSRF-Token': 'your_csrf_token_value_here'
+    'X-CSRF-Token': ''
   }
 });
 
