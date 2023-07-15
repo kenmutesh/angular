@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import api from '../../api.service';
 
 @Component({
   selector: 'app-login',
@@ -24,12 +25,26 @@ export class LoginComponent {
 
   login() {
     if (this.loginForm.valid) {
-      alert('Login Successful');
-      this.loginForm.reset();
-      // this.router.navigate(['home']);
-      // Set the token in localStorage
-      localStorage.setItem('token', JSON.stringify({ access_token: 'eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2ODkyODUyNTMsInN1YiI6IjEifQ.-lVf8D3Ki3gJu9Df4f4iirOAjPBa32wRd8o7lzZfVTc' }));
-      this.router.navigate(['home']);
+      const credentials = btoa(`${this.loginForm.value.id}:${this.loginForm.value.pin}`);
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${credentials}`
+      };
+
+      const body = {}; // Add any additional data required in the request body
+
+      api.post('get-token', body, { headers })
+        .then(res => {
+          alert('Login Successful');
+          this.loginForm.reset();
+          this.router.navigate(['home']);
+
+          // Store the token in localStorage
+          localStorage.setItem('token', JSON.stringify({ access_token: res.data.access_token }));
+        })
+        .catch(err => {
+          alert('Authentication failed. Please check your credentials.');
+        });
     } else {
       alert('Please fill in all the required fields.');
     }
